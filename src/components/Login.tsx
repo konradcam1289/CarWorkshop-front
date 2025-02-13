@@ -12,18 +12,20 @@ const Login: React.FC = () => {
         try {
             const data = await login(username, password);
     
-            if (!data || !data.token || !data.role) {
+            if (!data || !data.token || !data.role || !data.username) {
                 setErrorMessage("Błędna odpowiedź serwera.");
                 return;
             }
     
             const token = data.token;
             const role = data.role;
+            const loggedInUsername = data.username; // Pobieramy username z odpowiedzi
     
-            console.log("DEBUG: Otrzymana rola użytkownika ->", role); 
-
+            console.log("DEBUG: Otrzymana rola użytkownika ->", role);
+    
             localStorage.setItem("token", token);
             localStorage.setItem("role", role);
+            localStorage.setItem("username", loggedInUsername); // 🆕 ✅ Zapisywanie `username`
     
             switch (role) {
                 case "ROLE_ADMIN":
@@ -42,6 +44,7 @@ const Login: React.FC = () => {
             setErrorMessage("Nie udało się zalogować. Sprawdź login i hasło.");
         }
     };
+    
 
     return (
         <div>

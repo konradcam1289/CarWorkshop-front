@@ -9,6 +9,8 @@ const appointmentService = {
             throw new Error("Brak tokena.");
         }
 
+        console.log("📌 Token wysyłany do backendu:", token);
+
         try {
             const response = await fetch(API_URL, {
                 method: "GET",
@@ -21,6 +23,7 @@ const appointmentService = {
             if (!response.ok) {
                 console.error(`❌ Błąd pobierania terminów: ${response.status}`);
                 const errorMessage = await response.text();
+                console.error("📌 Odpowiedź serwera:", errorMessage);
                 throw new Error(`Błąd pobierania terminów: ${response.status} - ${errorMessage}`);
             }
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ServicesList from "./ServicesList";
-import AvailableDates from "./AvailableDates";
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -26,9 +25,7 @@ const Home: React.FC = () => {
             <p>Sprawdź, jakie usługi oferujemy i wybierz najlepszą dla siebie.</p>
             <ServicesList />
 
-            <h2>📅 Dostępne Terminy</h2>
-            <p>Sprawdź, kiedy możesz umówić się na wizytę w naszym warsztacie.</p>
-            <AvailableDates />
+            
 
             <div style={{ marginTop: "20px" }}>
                 <button onClick={() => navigate("/login")} style={buttonStyle}>🔑 Zaloguj się</button>

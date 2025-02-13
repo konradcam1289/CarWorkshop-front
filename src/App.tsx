@@ -8,6 +8,8 @@ import Register from "./components/Register";
 import Payment from "./components/Payment";
 import ServicesList from "./components/ServicesList"; // Importujemy listę usług
 import "./App.css"; // Importujemy globalne style
+import UserReservations from "./components/UserReservation";
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/services" element={<ServicesList />} /> {/* 🔹 Dodana trasa */}
+          <Route path="/client/reservations" element={<UserReservations />} />
         </Routes>
       </Router>
     </div>

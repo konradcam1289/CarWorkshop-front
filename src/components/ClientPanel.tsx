@@ -15,7 +15,6 @@ const ClientPanel: React.FC = () => {
         const fetchServices = async () => {
             try {
                 const token = localStorage.getItem("token");
-
                 if (!token) {
                     console.error("❌ Brak tokena! Przekierowanie do logowania.");
                     navigate("/login");
@@ -27,11 +26,7 @@ const ClientPanel: React.FC = () => {
                 setServices(data);
             } catch (error: any) {
                 console.error("❌ Błąd podczas pobierania usług:", error);
-                if (error.message.includes("403")) {
-                    setError("Nie masz uprawnień do przeglądania usług.");
-                } else {
-                    setError("Wystąpił błąd podczas pobierania usług.");
-                }
+                setError("Wystąpił błąd podczas pobierania usług.");
             }
         };
 

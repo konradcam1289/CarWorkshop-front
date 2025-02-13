@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/services";
+const API_URL = "http://localhost:8080/api/services";
 
 const servicesService = {
     getServices: async () => {
