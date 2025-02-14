@@ -38,24 +38,120 @@ const UserReservations: React.FC = () => {
         fetchReservations();
     }, [navigate]);
 
+    const handleDeleteReservation = async (reservationId: string) => {
+        const confirmDelete = window.confirm("Czy na pewno chcesz usunąć tę rezerwację?");
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/orders/${reservationId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Błąd podczas usuwania rezerwacji.");
+            }
+
+            setReservations((prevReservations) =>
+                prevReservations.filter((reservation) => reservation.id !== reservationId)
+            );
+
+            alert("Rezerwacja została usunięta.");
+        } catch (error) {
+            console.error("❌ Błąd usuwania rezerwacji:", error);
+            alert("Nie udało się usunąć rezerwacji.");
+        }
+    };
+
     return (
-        <div>
-            <h1>📅 Twoje Rezerwacje</h1>
+        <div style={containerStyle}>
+            <h1 style={headerStyle}>📅 Twoje Rezerwacje</h1>
+
             {reservations.length === 0 ? (
-                <p>Brak rezerwacji.</p>
+                <p style={noReservationsStyle}>Brak rezerwacji.</p>
             ) : (
-                <ul>
+                <ul style={listStyle}>
                     {reservations.map((order) => (
-                        <li key={order.id}>
-                            <p><strong>Usługi:</strong> {order.services.map((service: any) => service.name).join(", ")}</p>
-                            <p><strong>Data wizyty:</strong> {new Date(order.appointmentDate).toLocaleString()}</p>
-                            <p><strong>Status:</strong> {order.status}</p>
+                        <li key={order.id} style={listItemStyle}>
+                            <p><strong>🛠 Usługi:</strong> {order.services.map((service: any) => service.name).join(", ")}</p>
+                            <p><strong>📆 Data wizyty:</strong> {new Date(order.appointmentDate).toLocaleString()}</p>
+                            <p><strong>📌 Status:</strong> {order.status}</p>
+                            <button 
+                                onClick={() => handleDeleteReservation(order.id)} 
+                                style={deleteButtonStyle}
+                            >
+                                ❌ Usuń rezerwację
+                            </button>
                         </li>
                     ))}
                 </ul>
             )}
+
+            <button onClick={() => navigate("/client/home")} style={backButtonStyle}>
+                🔙 Powrót do panelu klienta
+            </button>
         </div>
     );
+};
+
+
+const containerStyle: React.CSSProperties = {
+    maxWidth: "800px",
+    margin: "50px auto",
+    padding: "20px",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+    fontFamily: "Arial, sans-serif"
+};
+
+const headerStyle: React.CSSProperties = {
+    color: "#333",
+    marginBottom: "20px"
+};
+
+const noReservationsStyle: React.CSSProperties = {
+    color: "#777",
+    fontSize: "18px"
+};
+
+const listStyle: React.CSSProperties = {
+    listStyleType: "none",
+    padding: "0"
+};
+
+const listItemStyle: React.CSSProperties = {
+    padding: "15px",
+    borderBottom: "1px solid #ddd",
+    backgroundColor: "#f9f9f9",
+    marginBottom: "10px",
+    borderRadius: "5px",
+    textAlign: "left"
+};
+
+const deleteButtonStyle: React.CSSProperties = {
+    marginTop: "10px",
+    padding: "8px 15px",
+    fontSize: "14px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    backgroundColor: "#dc3545",
+    color: "white",
+    border: "none"
+};
+
+const backButtonStyle: React.CSSProperties = {
+    marginTop: "20px",
+    padding: "12px 24px",
+    fontSize: "16px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    backgroundColor: "#007bff",
+    color: "white",
+    border: "none"
 };
 
 export default UserReservations;

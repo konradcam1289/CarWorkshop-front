@@ -19,14 +19,14 @@ const Login: React.FC = () => {
     
             const token = data.token;
             const role = data.role;
-            const loggedInUsername = data.username; // Pobieramy username z odpowiedzi
-    
+            const loggedInUsername = data.username;
+
             console.log("DEBUG: Otrzymana rola użytkownika ->", role);
-    
+
             localStorage.setItem("token", token);
             localStorage.setItem("role", role);
-            localStorage.setItem("username", loggedInUsername); // 🆕 ✅ Zapisywanie `username`
-    
+            localStorage.setItem("username", loggedInUsername);
+
             switch (role) {
                 case "ROLE_ADMIN":
                     navigate("/admin/home");
@@ -44,15 +44,91 @@ const Login: React.FC = () => {
             setErrorMessage("Nie udało się zalogować. Sprawdź login i hasło.");
         }
     };
-    
 
     return (
-        <div>
-            <h2>Logowanie</h2>
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <input type="text" placeholder="Login" value={username} onChange={(e) => setUsername(e.target.value)} />
-            <input type="password" placeholder="Hasło" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Zaloguj</button>
+        <div style={{
+            width: "100%",
+            maxWidth: "350px",
+            margin: "50px auto",
+            padding: "20px",
+            backgroundColor: "#fff",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+            textAlign: "center",
+            fontFamily: "Arial, sans-serif"
+        }}>
+            <h2 style={{ color: "#333", marginBottom: "20px" }}>Logowanie</h2>
+            
+            {errorMessage && <p style={{ color: "red", fontSize: "14px" }}>{errorMessage}</p>}
+            
+            <input 
+                type="text" 
+                placeholder="Login" 
+                value={username} 
+                onChange={(e) => setUsername(e.target.value)}
+                style={{
+                    width: "100%",
+                    padding: "10px",
+                    margin: "10px 0",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    fontSize: "16px"
+                }}
+            />
+            <input 
+                type="password" 
+                placeholder="Hasło" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                style={{
+                    width: "100%",
+                    padding: "10px",
+                    margin: "10px 0",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                    fontSize: "16px"
+                }}
+            />
+            
+            <button 
+                onClick={handleLogin} 
+                style={{
+                    width: "100%",
+                    padding: "10px",
+                    backgroundColor: "#007bff",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    marginTop: "10px"
+                }}>
+                Zaloguj
+            </button>
+
+            <div style={{ margin: "15px 0", fontSize: "14px", color: "#777" }}>lub</div>
+
+            <button 
+                style={{
+                    width: "100%",
+                    padding: "10px",
+                    backgroundColor: "#db4437",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                <img 
+                    src="/assets/google-icon.png" 
+                    alt="Google logo" 
+                    style={{ width: "20px", height: "20px", marginRight: "10px" }}
+                />
+                Zaloguj się przez Google
+            </button>
         </div>
     );
 };

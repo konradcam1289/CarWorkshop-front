@@ -54,7 +54,6 @@ const ServicesList: React.FC = () => {
     );
 };
 
-// ✅ Style CSS-in-JS dla lepszego wyglądu
 const containerStyle: React.CSSProperties = {
     maxWidth: "600px",
     margin: "0 auto",

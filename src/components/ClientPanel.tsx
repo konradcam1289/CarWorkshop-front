@@ -66,60 +66,134 @@ const ClientPanel: React.FC = () => {
         navigate("/payment");
     };
 
+    const goToReservations = () => {
+        navigate("/client/reservations");
+    };
+
     return (
-        <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
-            <h1>👤 Panel Klienta</h1>
+        <div style={containerStyle}>
+            <h1 style={headerStyle}>👤 Panel Klienta</h1>
 
-            {error && <p style={{ color: "red" }}>❌ {error}</p>}
+            {error && <p style={{ color: "red", fontWeight: "bold" }}>❌ {error}</p>}
 
-            <h2>📋 Dostępne Usługi</h2>
+            <h2 style={subHeaderStyle}>📋 Dostępne Usługi</h2>
             {services.length === 0 && !error && <p>Ładowanie usług...</p>}
             {services.length > 0 && (
-                <ul>
+                <ul style={listStyle}>
                     {services.map((service) => (
-                        <li key={service.id}>
-                            {service.name} - {service.price} PLN
+                        <li key={service.id} style={listItemStyle}>
+                            <strong>{service.name}</strong> - {service.price} PLN
                             <br />
                             <select
                                 onChange={(e) => handleAppointmentChange(service.id, e.target.value)}
                                 value={selectedAppointments[service.id] || ""}
+                                style={selectStyle}
                             >
                                 <option value="">-- Wybierz termin --</option>
                                 {appointments.map((date) => (
                                     <option key={date.id} value={date.date}>{date.date}</option>
                                 ))}
                             </select>
-                            <button onClick={() => addToCart(service)}>Dodaj do koszyka</button>
+                            <button onClick={() => addToCart(service)} style={buttonStyle}>
+                                Dodaj do koszyka
+                            </button>
                         </li>
                     ))}
                 </ul>
             )}
 
-            <h2>🛒 Koszyk</h2>
-            <ul>
+            <h2 style={subHeaderStyle}>🛒 Koszyk</h2>
+            <ul style={listStyle}>
                 {cart.map((item, index) => (
-                    <li key={index}>{item.name} - {item.price} PLN - {item.appointmentDate}</li>
+                    <li key={index} style={listItemStyle}>
+                        {item.name} - {item.price} PLN - <strong>{item.appointmentDate}</strong>
+                    </li>
                 ))}
             </ul>
 
             {cart.length > 0 && (
-                <button onClick={proceedToPayment} style={buttonStyle}>
+                <button onClick={proceedToPayment} style={paymentButtonStyle}>
                     Przejdź do płatności
                 </button>
             )}
+
+            <button onClick={goToReservations} style={reservationButtonStyle}>
+                📅 Moje rezerwacje
+            </button>
         </div>
     );
 };
 
+// STYLE
+const containerStyle: React.CSSProperties = {
+    maxWidth: "800px",
+    margin: "50px auto",
+    padding: "20px",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+    fontFamily: "Arial, sans-serif"
+};
+
+const headerStyle: React.CSSProperties = {
+    color: "#333",
+    marginBottom: "20px"
+};
+
+const subHeaderStyle: React.CSSProperties = {
+    color: "#555",
+    marginBottom: "15px"
+};
+
+const listStyle: React.CSSProperties = {
+    listStyleType: "none",
+    padding: "0"
+};
+
+const listItemStyle: React.CSSProperties = {
+    padding: "10px",
+    borderBottom: "1px solid #ddd",
+    textAlign: "left"
+};
+
+const selectStyle: React.CSSProperties = {
+    margin: "10px",
+    padding: "5px",
+    borderRadius: "5px"
+};
+
 const buttonStyle: React.CSSProperties = {
+    padding: "10px 15px",
+    fontSize: "14px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    backgroundColor: "#007bff",
+    color: "white",
+    border: "none",
+    marginLeft: "10px"
+};
+
+const paymentButtonStyle: React.CSSProperties = {
     marginTop: "20px",
     padding: "12px 24px",
     fontSize: "16px",
     borderRadius: "5px",
     cursor: "pointer",
-    backgroundColor: "#FFA500",
+    backgroundColor: "#28a745",
     color: "white",
-    border: "none",
+    border: "none"
+};
+
+const reservationButtonStyle: React.CSSProperties = {
+    marginTop: "15px",
+    padding: "12px 24px",
+    fontSize: "16px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    backgroundColor: "#ffc107",
+    color: "black",
+    border: "none"
 };
 
 export default ClientPanel;

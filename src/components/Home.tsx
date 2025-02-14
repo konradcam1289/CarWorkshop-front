@@ -7,7 +7,6 @@ const Home: React.FC = () => {
 
     return (
         <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center", padding: "20px" }}>
-            {/* Pasek nawigacyjny */}
             <nav style={navBarStyle}>
                 <button style={navButtonStyle} onClick={() => navigate("/")}>Home</button>
                 <button style={navButtonStyle} onClick={() => navigate("/services")}>O nas</button>
@@ -35,7 +34,6 @@ const Home: React.FC = () => {
     );
 };
 
-// Style dla przycisków nawigacyjnych
 const navBarStyle: React.CSSProperties = {
     display: "flex",
     background: 'black',
